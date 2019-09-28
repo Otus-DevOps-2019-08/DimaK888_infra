@@ -32,3 +32,27 @@ ssh -t kolbin@35.240.89.91 ssh kolbin@10.132.0.4
   ```
 - Командля для подключения: ssh someinternalhost
 
+### Домашнее задание 1.6 (Основные сервисы Google Cloud Platform)
+#### Создание инстанса через gcloud с указанием startup-script-url:
+```
+gcloud compute instances create reddit-app\
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags=puma-server,default-puma-server \
+  --restart-on-failure \
+  --metadata startup-script-url=https://raw.githubusercontent.com/Otus-DevOps-2019-08/DimaK888_infra/cloud-testapp/startup_script.sh
+```
+#### Создание правила брандмауэра с тегом default-puma-server для доступа к приложения по 9292 порту через gcloud:
+```
+gcloud compute firewall-rules create default-puma-server\
+  --allow=TCP:9292\
+  --target-tags=default-puma-server
+```
+#### Информация для прогона тестов:
+```
+testapp_IP = 35.240.12.255
+testapp_port = 9292
+```
+
