@@ -4,6 +4,6 @@
   "image_description": "image_description",
   "image_family": "image_family",
   "ssh_username": "ssh_username",
-  "tags": []
+  "tags": "tags"
 }
 
