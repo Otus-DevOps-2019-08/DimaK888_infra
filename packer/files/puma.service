@@ -1,0 +1,16 @@
+# https://github.com/puma/puma/blob/master/docs/systemd.md
+
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+User=kolbin
+Type=simple
+WorkingDirectory=/home/kolbin/reddit
+ExecStart=/usr/local/bin/puma
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
