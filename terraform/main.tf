@@ -1,5 +1,5 @@
 terraform {
-  required_version = "0.12.9"
+  required_version = "~> 0.12.8"
 }
 
 provider "google" {
@@ -18,9 +18,6 @@ resource "google_compute_instance" "app" {
       image = var.disk_image
     }
   }
-  metadata = {
-    ssh-keys = "kolbin:${file(var.public_key_path)}"
-  }
   network_interface {
     network = "default"
     access_config {}
@@ -30,7 +27,7 @@ resource "google_compute_instance" "app" {
     host        = self.network_interface[0].access_config[0].nat_ip
     user        = "kolbin"
     agent       = false
-    private_key = file(var.private_key_patch)
+    private_key = file(var.private_key_path)
   }
   provisioner "file" {
     source      = "files/puma.service"
@@ -39,6 +36,11 @@ resource "google_compute_instance" "app" {
   provisioner "remote-exec" {
     script = "files/deploy.sh"
   }
+}
+
+resource "google_compute_project_metadata_item" "ssh-keys" {
+  key   = "ssh-keys"
+  value = join("\n", var.ssh_keys)
 }
 
 resource "google_compute_firewall" "firewall_puma" {

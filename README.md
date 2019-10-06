@@ -65,3 +65,20 @@ testapp_port = 9292
 - создан образ reddit-full
 - создан скрипт для запуска виртуальной машины с использованием образа reddit-full
 
+### Домашнее задание 1.8 (Практика Infrastructure as a Code)
+#### Краткое описание проделанной работы:
+- описана инфраструктуру файлом `main.tf`
+- описаны переменные в `variables.tf`
+- заданы значения через `terraform.tfvars` (исключен из индекса, пример значений в `terraform.tfvars.example`)
+- отформатировал файлы terraform'a командой terraform fmt
+- (*) добавлен ssh ключ appuser_web через веб-консоль
+- (*) добавил ssh ключи через конструкцию:
+```
+resource "google_compute_project_metadata_item" "ssh-keys" {
+  key   = "ssh-keys"
+  value = join("\n", var.ssh_keys)
+}
+```
+и перечислил список ключей в `terraform.tfvars` как массив вида `["user:ssh_key_text"]`
+- (*) в результате применения изменений ключ `appuser_web` был перетерт ключами, указанными в файле `terraform.tfvars`
+
