@@ -1,0 +1,9 @@
+project           = "your_project_id"
+public_key_path   = "~/.ssh/key.pub"
+private_key_path = "~/.ssh/key"
+disk_image        = "your_disk_image"
+zone              = "your_instance_zone"
+ssh_keys = [
+  "user: ssh-key"
+]
+
